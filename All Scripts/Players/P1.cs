@@ -56,6 +56,6 @@ public class P1 : MonoBehaviour
     }
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jump);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
     }
 }
