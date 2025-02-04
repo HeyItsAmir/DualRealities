@@ -29,6 +29,10 @@ public class P1 : MonoBehaviour
         {
             Jump();
         }
+        if (Input.GetKey(KeyCode.S) && isGrounded) 
+        {
+            Debug.Log("crouch");
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,6 +56,6 @@ public class P1 : MonoBehaviour
     }
     void Jump()
     {
-        rb.AddForce(new Vector2(rb.linearVelocity.x, jump));
+        rb.velocity = new Vector2(rb.velocity.x, jump);
     }
 }
