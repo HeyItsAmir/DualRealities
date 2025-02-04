@@ -54,6 +54,6 @@ public class P2 : MonoBehaviour
     }
     void Jump()
     {
-        rb.AddForce(new Vector2(rb.velocity.x, jump));
+        rb.AddForce(new Vector2(rb.linearVelocity.x, jump));
     }
 }

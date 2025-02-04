@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class P1 : MonoBehaviour
 {
-    private bool isGrounded;
-    public Rigidbody2D rb;
-    public float speed = 1.0f;
-    public float jump;
+    [SerializeField] bool isGrounded;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] float speed = 1.0f;
+    [SerializeField] float jump;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +52,6 @@ public class P1 : MonoBehaviour
     }
     void Jump()
     {
-        rb.AddForce(new Vector2(rb.velocity.x, jump));
+        rb.AddForce(new Vector2(rb.linearVelocity.x, jump));
     }
 }
