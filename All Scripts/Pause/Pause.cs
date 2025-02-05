@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
+    private MusicRandomPlay musicRandomPlay;
     private bool IsPause = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
     }
 
     // Update is called once per frame
@@ -19,10 +20,18 @@ public class Pause : MonoBehaviour
             if (IsPause)
             {
                 ResumeGame();
+                if (musicRandomPlay != null && !musicRandomPlay.audioSource.isPlaying)
+                {
+                musicRandomPlay.audioSource.UnPause();
+                }
             }
             else
             {
                 PauseGame();
+                if (musicRandomPlay != null)
+                {
+                musicRandomPlay.audioSource.Pause();
+                }
             }
         }
     }

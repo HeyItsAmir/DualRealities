@@ -5,9 +5,11 @@ using UnityEngine;
 public class P2 : MonoBehaviour
 {
     private bool isGrounded;
-    public Rigidbody2D rb;
-    public float speed = 1.0f;
-    public float jump;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] float speed = 1.0f;
+    [SerializeField] float jump;
+    [SerializeField] Transform cameraTransform;
+    [SerializeField] float rightLimitOfsset = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,23 +19,29 @@ public class P2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //nemizare Player az samt rast az camera kharej she
+        float maxXposition = cameraTransform.position.x + rightLimitOfsset;
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             PlayerMove(-1);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        
+        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < maxXposition)
         {
             PlayerMove(1);
         }
+        
         if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
         {
             Jump();
         }
+        
         if (Input.GetKey(KeyCode.DownArrow) && isGrounded)
         {
             Debug.Log("crouch");
         }
-
+        
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -57,6 +65,6 @@ public class P2 : MonoBehaviour
     }
     void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+        rb.velocity = new Vector2(rb.velocity.x, jump);
     }
 }

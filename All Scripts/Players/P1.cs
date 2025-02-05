@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class P1 : MonoBehaviour
 {
-    [SerializeField] bool isGrounded;
+    private bool isGrounded;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed = 1.0f;
     [SerializeField] float jump;
+    [SerializeField] Transform cameraTransform;
+    [SerializeField] float rightLimitOfsset = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,14 @@ public class P1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //nemizare Player is samt rast is camera kharej she
+        float maxXposition = cameraTransform.position.x + rightLimitOfsset;
+
         if (Input.GetKey(KeyCode.A))
         {
             PlayerMove(-1);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && transform.position.x < maxXposition)
         {
             PlayerMove(1);
         }
@@ -56,6 +61,6 @@ public class P1 : MonoBehaviour
     }
     void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+        rb.velocity = new Vector2(rb.velocity.x, jump);
     }
 }
