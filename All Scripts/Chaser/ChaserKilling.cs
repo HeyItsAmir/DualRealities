@@ -9,7 +9,7 @@ public class ChaserKilling : MonoBehaviour
     private void Start()
     {
         GameOverUI.SetActive(false);
-        music = FindAnyObjectByType<MusicRandomPlay>();
+     //   music = FindAnyObjectByType<MusicRandomPlay>();
     }
     void OnTriggerEnter2D(Collider2D collision) 
     {
