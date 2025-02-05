@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class P1 : MonoBehaviour
 {
     private bool isGrounded;
+    bool isReverse;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed = 1.0f;
-    [SerializeField] float jump;
+    [SerializeField] float jump = 10f;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        isReverse = GetComponent<ReverseGravity>().isReverse;
     }
 
     // Update is called once per frame
@@ -41,7 +45,7 @@ public class P1 : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
@@ -49,7 +53,7 @@ public class P1 : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.tag == "Ground")
         {
             isGrounded = false;
         }
@@ -60,7 +64,14 @@ public class P1 : MonoBehaviour
         transform.Translate(move);
     }
     void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, jump);
+    {      
+        if(isReverse)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump * -1);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+        }
     }
 }
