@@ -12,6 +12,8 @@ public class P1 : MonoBehaviour
     [SerializeField] float jump = 10f;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
+    public BackgroundLooper repeat;
+    public float scrollspeed =0f;
 
     public bool IsJumping = false;
     // Start is called before the first frame update
@@ -31,20 +33,24 @@ public class P1 : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             speed = 10f;
+            
         }
        
         else
         {
             speed = 0f;
+            scrollspeed = 0;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             PlayerMove(-1);
+            scrollspeed = -5;
         }
         if (Input.GetKey(KeyCode.D) && transform.position.x < maxXposition)
         {
             PlayerMove(1);
+            scrollspeed = 5;
         }
         if (Input.GetKey(KeyCode.W) && isGrounded)
         {
