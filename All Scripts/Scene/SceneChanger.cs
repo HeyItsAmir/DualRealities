@@ -20,7 +20,8 @@ public class SceneChanger : MonoBehaviour
     }
 
     public void ChangeTheSceneToLevel1()
-    { 
+    {
+        Debug.Log("Changing");
         SceneManager.LoadScene("Level-1");
     }
     public void ChangeTheSceneToMainMenu()

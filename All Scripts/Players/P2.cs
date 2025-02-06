@@ -94,11 +94,11 @@ public class P2 : MonoBehaviour
         IsJumping = true;
         if (isReverse)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump * -1);
+            rb.velocity = new Vector2(rb.velocity.x, jump * -1);
         }
         else
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+            rb.velocity = new Vector2(rb.velocity.x, jump);
         }
     }
 }

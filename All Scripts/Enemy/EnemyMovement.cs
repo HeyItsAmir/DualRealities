@@ -15,7 +15,7 @@ public class EnemyMovement : MonoBehaviour
     {
         GameOverUI.SetActive(false);
 
-        rb.linearVelocity = new Vector2(-speed, rb.linearVelocity.y);
+        rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

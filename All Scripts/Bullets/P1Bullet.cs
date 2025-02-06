@@ -32,7 +32,7 @@ public class P1Bullet : MonoBehaviour
             direction = -1;
         }
 
-        rb.linearVelocity = new Vector2(speed * direction, rb.linearVelocity.y);
+        rb.velocity = new Vector2(speed * direction, rb.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

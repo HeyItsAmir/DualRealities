@@ -3,11 +3,13 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-private MusicRandomPlay musicRandomPlay;
+    private MusicRandomPlay musicRandomPlay;
     private bool IsPause = false;
+    public GameObject GameOverUI;
     // Start is called before the first frame update
     void Start()
     {
+        GameOverUI.SetActive(false);
         musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
     }
 
@@ -29,7 +31,8 @@ private MusicRandomPlay musicRandomPlay;
                 PauseGame();
                 if (musicRandomPlay != null)
                 {
-                musicRandomPlay.audioSource.Pause();
+                    GameOverUI.SetActive(true);
+                    musicRandomPlay.audioSource.Pause();
                 }
             }
         }
