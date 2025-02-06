@@ -98,7 +98,7 @@ public class PlayerController2 : MonoBehaviour
     {
         if (context.performed && isGrounded == true)
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
     }
     
@@ -121,7 +121,7 @@ public class PlayerController2 : MonoBehaviour
         {
             transform.localScale = new Vector3(-2, 2, 2);
         }
-        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
     }
 
     private void Shoot()

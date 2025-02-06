@@ -61,7 +61,8 @@ public class P1 : MonoBehaviour
             Debug.Log("crouch");
         }
     }
-    void OnCollisionEnter2D(Collision2D collision)
+
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
@@ -97,11 +98,11 @@ public class P1 : MonoBehaviour
         IsJumping = true;
         if(isReverse)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump * -1);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump * -1);
         }
         else
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
         }
     }
 }

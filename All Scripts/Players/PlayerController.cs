@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
     public float bulletForce = 20f;
     public float Lifetime = 2f;
-    private Vector2 lookInput;
 
     void Update()
     {
@@ -40,14 +39,5 @@ public class PlayerController : MonoBehaviour
     {
         // bullet 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
-        // jahate shelik (mouse)
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mousePosition - (Vector2)firePoint.position).normalized;
-
-        // addforce (harekat) be bullet
-        rb.AddForce(direction * bulletForce, ForceMode2D.Impulse);
-        Destroy(bullet,Lifetime);
     }
 }

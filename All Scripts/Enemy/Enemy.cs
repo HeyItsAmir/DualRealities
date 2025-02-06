@@ -3,9 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float health = 50f;
-    public float damage = 10f;
-    public LayerMask bulletLayer;
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -17,13 +15,5 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (bulletLayer == (bulletLayer | (1 << collision.gameObject.layer)))
-        {
-            TakeDamage();
-            Destroy(collision.gameObject);
-        }
     }
 }
