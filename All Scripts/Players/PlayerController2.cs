@@ -12,6 +12,7 @@ public class PlayerController2 : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float bulletForce = 20f;
+    public float bulletSpeed = 10f;
     public float bulletLifetime = 2f;
     public float scrollspeed = 0f;
 
@@ -20,8 +21,13 @@ public class PlayerController2 : MonoBehaviour
     private Vector2 lookInput;
     private Rigidbody2D rb;
     private bool isGrounded = false;
+    float direction;
+    private float lastXPosition;
     
-
+void  Start()
+{
+    lastXPosition = transform.position.x;
+}
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,7 +35,11 @@ public class PlayerController2 : MonoBehaviour
 
     private void Update()
     {
-        
+         if (transform.position.x > lastXPosition)
+        {
+            ScoreManager.instance.AddScore(1); 
+            lastXPosition = transform.position.x;
+        }
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         //if (groundCollider != null)
         //{
@@ -42,11 +52,11 @@ public class PlayerController2 : MonoBehaviour
         //    Debug.Log("Ground Layer: " + groundLayer.value);
         //}
 
-        if (lookInput.magnitude > 0.1f)
-        {
-            float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg;
-            firePoint.rotation = Quaternion.Euler(0, 0, angle);
-        }
+        //if (lookInput.magnitude > 0.1f)
+        //{
+        //    float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg;
+        //    firePoint.rotation = Quaternion.Euler(0, 0, angle);
+        //}
 
     }
 
@@ -115,10 +125,12 @@ public class PlayerController2 : MonoBehaviour
     {
         if (moveInput.x > 0) 
         {
+            direction = 1;
             transform.localScale = new Vector3(2, 2, 2);
         }
         else if (moveInput.x < 0) 
         {
+            direction = -1;
             transform.localScale = new Vector3(-2, 2, 2);
         }
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
@@ -126,12 +138,12 @@ public class PlayerController2 : MonoBehaviour
 
     private void Shoot()
     {
-        
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
 
-        
-        bulletRb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
+        rb.velocity = new Vector2(bulletSpeed * direction, rb.velocity.y);
+
+       // rb.velocity = Vector2.right * bulletSpeed;
 
         
         Destroy(bullet, bulletLifetime);

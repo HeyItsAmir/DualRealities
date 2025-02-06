@@ -11,11 +11,13 @@ public class Pause : MonoBehaviour
     {
         GameOverUI.SetActive(false);
         musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
+        musicRandomPlay.audioSource.Pause();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             if (IsPause)

@@ -21,10 +21,10 @@ public class Player2Animation : MonoBehaviour
     void Update()
     {
         PlayerSpeed = P2.speed;
-        //PlayerSpeed2 = P2c.moveSpeed;
+        PlayerSpeed2 = P2c.moveSpeed;
 
         animator.SetFloat("Speed", PlayerSpeed);
-        //animator.SetFloat("Speed", PlayerSpeed2);
+        animator.SetFloat("Speed", PlayerSpeed2);
         if (P2.IsJumping)
         {
             animator.SetBool("MidAir", true);

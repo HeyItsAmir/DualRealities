@@ -8,7 +8,7 @@ public class ReverseGravityTrigger : MonoBehaviour
         if(collision.tag == "Player")
         {
             collision.GetComponent<ReverseGravity>().ReversGravity();
-            Destroy(gameObject);
+           // Destroy(gameObject);
         }
     }
 }

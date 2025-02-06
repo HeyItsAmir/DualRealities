@@ -41,7 +41,7 @@ public class P1Bullet : MonoBehaviour
         {
             Enemy target = collision.gameObject.GetComponent<Enemy>();
 
-            target.TakeDamage(damage);
+          //  target.TakeDamage(damage);
             Explode();
         }
         else if (collision.gameObject.tag == "Ground")

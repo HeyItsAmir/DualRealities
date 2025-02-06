@@ -14,13 +14,14 @@ public class P1 : MonoBehaviour
     [SerializeField] float rightLimitOfsset = 3;
     public BackgroundLooper repeat;
     public float scrollspeed =0f;
+    private float lastXPosition;
 
     public bool IsJumping = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        lastXPosition = transform.position.x;
         isReverse = GetComponent<ReverseGravity>().isReverse;
     }
 
@@ -59,6 +60,11 @@ public class P1 : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && isGrounded) 
         {
             Debug.Log("crouch");
+        }
+        if (transform.position.x > lastXPosition)
+        {
+            ScoreManager.instance.AddScore(1);
+            lastXPosition = transform.position.x;
         }
     }
 

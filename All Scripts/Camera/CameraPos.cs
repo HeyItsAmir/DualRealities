@@ -19,7 +19,7 @@ public class CameraPos : MonoBehaviour
     void Update()
     {
         camera.transform.position = new Vector3(transform.position.x, transform.position.y, camera.transform.position.z);
-        background.transform.position = new Vector3(transform.position.x - 3.95f, 2.4976f, background.transform.position.z);
-        background2.transform.position = new Vector3(transform.position.x + 3.95f, 2.4976f, background2.transform.position.z);//change beshe bar asas mohal background ha 
+        background.transform.position = new Vector3(transform.position.x , -2.4f, 5f);
+        background2.transform.position = new Vector3(transform.position.x , 2.5f, 5f);//change beshe bar asas mohal background ha 
     }
 }

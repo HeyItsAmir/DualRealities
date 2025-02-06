@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    
+    private MusicRandomPlay musicRandomPlay;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
     }
 
     // Update is called once per frame
@@ -21,11 +21,13 @@ public class SceneChanger : MonoBehaviour
 
     public void ChangeTheSceneToLevel1()
     {
+        
         Debug.Log("Changing");
         SceneManager.LoadScene("Level-1");
     }
     public void ChangeTheSceneToMainMenu()
     {
+        
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Main_Menu");
     }

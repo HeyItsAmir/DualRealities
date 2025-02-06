@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,8 +28,7 @@ public class PlayerController : MonoBehaviour
         // float moveY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
         // transform.Translate(new Vector2(moveX, moveY));
 
-       
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             Shoot();
         }
