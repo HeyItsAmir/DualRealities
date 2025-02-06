@@ -27,16 +27,16 @@ public class PlayerController2 : MonoBehaviour
     private void Update()
     {
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-   /*     if (groundCollider != null)
-        {
-    Debug.Log("Ground detected: " + groundCollider.gameObject.name);
-        }
-        else
-        {
-    Debug.Log("No ground detected!");
- Debug.Log("Is Grounded: " + isGrounded);
-        Debug.Log("Ground Layer: " + groundLayer.value);
-        }*/
+        //if (groundCollider != null)
+        //{
+        //    Debug.Log("Ground detected: " + groundCollider.gameObject.name);
+        //}
+        //else
+        //{
+        //    Debug.Log("No ground detected!");
+        //    Debug.Log("Is Grounded: " + isGrounded);
+        //    Debug.Log("Ground Layer: " + groundLayer.value);
+        //}
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer & ~(1 << gameObject.layer));
 
         if (lookInput.magnitude > 0.1f)
@@ -60,7 +60,7 @@ public class PlayerController2 : MonoBehaviour
     {
         if (context.performed && isGrounded)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
     }
     
@@ -76,7 +76,7 @@ public class PlayerController2 : MonoBehaviour
     private void FixedUpdate()
     {
         
-        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
     }
 
     private void Shoot()

@@ -5,15 +5,20 @@ using UnityEngine;
 public class P2 : MonoBehaviour
 {
     private bool isGrounded;
+    bool isReverse;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed = 1.0f;
+    [SerializeField] public float speed = 1.0f;
     [SerializeField] float jump;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
+
+    public bool IsJumping = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        isReverse = GetComponent<ReverseGravity>().isReverse;
     }
 
     // Update is called once per frame
@@ -21,6 +26,16 @@ public class P2 : MonoBehaviour
     {
         //nemizare Player az samt rast az camera kharej she
         float maxXposition = cameraTransform.position.x + rightLimitOfsset;
+
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            speed = 10f;
+        }
+
+        else
+        {
+            speed = 0f;
+        }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -48,6 +63,7 @@ public class P2 : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            IsJumping = false;
         }
     }
 
@@ -56,15 +72,33 @@ public class P2 : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            IsJumping = true;
         }
     }
     void PlayerMove(int direction)
     {
         Vector2 move = new Vector3(direction, 0) * speed * Time.deltaTime;
         transform.Translate(move);
+
+        if (direction > 0)
+        {
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+        else if (direction < 0)
+        {
+            transform.localScale = new Vector3(-2, 2, 1);
+        }
     }
     void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+        IsJumping = true;
+        if (isReverse)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jump * -1);
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jump);
+        }
     }
 }

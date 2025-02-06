@@ -8,10 +8,12 @@ public class P1 : MonoBehaviour
     private bool isGrounded;
     bool isReverse;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed = 1.0f;
+    [SerializeField] public float speed = 1.0f;
     [SerializeField] float jump = 10f;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
+
+    public bool IsJumping = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,16 @@ public class P1 : MonoBehaviour
     {
         //nemizare Player is samt rast is camera kharej she
         float maxXposition = cameraTransform.position.x + rightLimitOfsset;
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            speed = 10f;
+        }
+       
+        else
+        {
+            speed = 0f;
+        }
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -48,6 +60,7 @@ public class P1 : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+            IsJumping = false;
         }
     }
 
@@ -56,22 +69,33 @@ public class P1 : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = false;
+            IsJumping = true;
         }
     }
     void PlayerMove(int direction)
     {
         Vector2 move = new Vector3(direction, 0) * speed * Time.deltaTime;
         transform.Translate(move);
+
+        if (direction > 0) 
+        {
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+        else if (direction < 0) 
+        {
+            transform.localScale = new Vector3(-2, 2, 1);
+        }
     }
     void Jump()
     {      
+        IsJumping = true;
         if(isReverse)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump * -1);
+            rb.velocity = new Vector2(rb.velocity.x, jump * -1);
         }
         else
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+            rb.velocity = new Vector2(rb.velocity.x, jump);
         }
     }
 }
