@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class P1 : MonoBehaviour
 {
+    public GameObject FullHealth;
+
+    public Animator animator;
+
     private bool isGrounded;
     bool isReverse;
     [SerializeField] Rigidbody2D rb;
@@ -16,6 +21,8 @@ public class P1 : MonoBehaviour
     public float scrollspeed =0f;
     private float lastXPosition;
 
+    public bool CloseAttack;
+    public bool isDead;
     public bool IsJumping = false;
     // Start is called before the first frame update
     void Start()
@@ -28,46 +35,60 @@ public class P1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         //nemizare Player is samt rast is camera kharej she
         float maxXposition = cameraTransform.position.x + rightLimitOfsset;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (!isDead)
         {
-            speed = 10f;
-            
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                speed = 10f;
+
+            }
+
+            else
+            {
+                speed = 0f;
+                scrollspeed = 0;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                PlayerMove(-1);
+                scrollspeed = -5;
+            }
+            if (Input.GetKey(KeyCode.D) && transform.position.x < maxXposition)
+            {
+                PlayerMove(1);
+                scrollspeed = 5;
+            }
+            if (Input.GetKey(KeyCode.W) && isGrounded)
+            {
+                Jump();
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                CloseAttack = true;
+            }
+            else
+            {
+                CloseAttack = false;
+            }
+            if (transform.position.x > lastXPosition)
+            {
+                ScoreManager.instance.AddScore(1);
+                lastXPosition = transform.position.x;
+            }
         }
-       
         else
         {
-            speed = 0f;
+            speed = 0;
+            jump = 0;
             scrollspeed = 0;
         }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            PlayerMove(-1);
-            scrollspeed = -5;
-        }
-        if (Input.GetKey(KeyCode.D) && transform.position.x < maxXposition)
-        {
-            PlayerMove(1);
-            scrollspeed = 5;
-        }
-        if (Input.GetKey(KeyCode.W) && isGrounded)
-        {
-            Jump();
-        }
-        if (Input.GetKey(KeyCode.S) && isGrounded) 
-        {
-            Debug.Log("crouch");
-        }
-        if (transform.position.x > lastXPosition)
-        {
-            ScoreManager.instance.AddScore(1);
-            lastXPosition = transform.position.x;
-        }
     }
-
+    
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -111,4 +132,21 @@ public class P1 : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jump);
         }
     }
+    public void Die()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            animator.SetBool("Dead", true);  
+            StartCoroutine(DestroyAfterDeath());
+        }
+    }
+
+    IEnumerator DestroyAfterDeath()
+    {
+        FullHealth.SetActive(false);
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);  
+    }
+
 }

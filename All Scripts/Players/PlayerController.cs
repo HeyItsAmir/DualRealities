@@ -21,17 +21,22 @@ public class PlayerController : MonoBehaviour
     public float bulletForce = 20f;
     public float Lifetime = 2f;
 
+    public bool isShooting = false;
+
     void Update()
     {
+        isShooting = false;
         // char movement
         // float moveX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         // float moveY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
         // transform.Translate(new Vector2(moveX, moveY));
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
+            isShooting = true;
             Shoot();
         }
+       
     }
 
 

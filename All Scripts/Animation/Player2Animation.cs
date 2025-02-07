@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player2Animation : MonoBehaviour
 {
+
+    public PlayerController2 controller2;
+
     public float PlayerSpeed;
     public float PlayerSpeed2;
     public Animator animator;
@@ -25,6 +28,21 @@ public class Player2Animation : MonoBehaviour
 
         animator.SetFloat("Speed", PlayerSpeed);
         animator.SetFloat("Speed", PlayerSpeed2);
+
+        if (controller2.isShooting)
+        {
+            animator.SetBool("Attack", true);
+        }
+        else
+        {
+            animator.SetBool("Attack", false);
+        }
+
+        if (P2.CloseAttack)
+        {
+            animator.SetTrigger("CloseAttack");
+        }
+
         if (P2.IsJumping)
         {
             animator.SetBool("MidAir", true);

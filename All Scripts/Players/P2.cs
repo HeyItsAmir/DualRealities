@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class P2 : MonoBehaviour
 {
+    public GameObject FullHealth;
+
+    public Animator animator;
+
     private bool isGrounded;
     bool isReverse;
     [SerializeField] Rigidbody2D rb;
@@ -11,6 +15,9 @@ public class P2 : MonoBehaviour
     [SerializeField] float jump;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
+
+    public bool CloseAttack;
+    public bool isDead;
 
     public bool IsJumping = false;
     // Start is called before the first frame update
@@ -26,37 +33,49 @@ public class P2 : MonoBehaviour
     {
         //nemizare Player az samt rast az camera kharej she
         float maxXposition = cameraTransform.position.x + rightLimitOfsset;
-
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        if (!isDead)
         {
-            speed = 10f;
-        }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+            {
+                speed = 10f;
+            }
 
+            else
+            {
+                speed = 0f;
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                PlayerMove(-1);
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < maxXposition)
+            {
+                PlayerMove(1);
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                CloseAttack = true;
+            }
+            else
+            {
+                CloseAttack = false;
+            }
+
+        }
         else
         {
-            speed = 0f;
+            speed = 0;
+            jump = 0;
+            //scrollspeed = 0; 
         }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            PlayerMove(-1);
-        }
-        
-        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < maxXposition)
-        {
-            PlayerMove(1);
-        }
-        
-        if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
-        {
-            Jump();
-        }
-        
-        if (Input.GetKey(KeyCode.DownArrow) && isGrounded)
-        {
-            Debug.Log("crouch");
-        }
-        
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -100,5 +119,21 @@ public class P2 : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jump);
         }
+    }
+    public void Die()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            animator.SetBool("Dead", true);
+            StartCoroutine(DestroyAfterDeath());
+        }
+    }
+
+    IEnumerator DestroyAfterDeath()
+    {
+        FullHealth.SetActive(false);
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
     }
 }

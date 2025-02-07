@@ -23,7 +23,8 @@ public class PlayerController2 : MonoBehaviour
     private bool isGrounded = false;
     float direction;
     private float lastXPosition;
-    
+
+    public bool isShooting;
 void  Start()
 {
     lastXPosition = transform.position.x;
@@ -117,7 +118,12 @@ void  Start()
     {
         if (context.performed)
         {
+            isShooting = true;
             Shoot();
+        }
+        else
+        {
+            isShooting = false;
         }
     }
 
