@@ -14,33 +14,33 @@ public class EnemyMovement : MonoBehaviour
     public bool PlayerIsDead;
     private MusicRandomPlay music;
     public GameObject GameOverUI;
+    //public GameObject Health1, Health2, Health3; 
+    private int currentHealth = 3;
+    private bool canTakeDamage = true; 
     void Start()
     {
-        GameOverUI.SetActive(false);
-        music = FindAnyObjectByType<MusicRandomPlay>();
-        rb.velocity = new Vector2(-speed, rb.velocity.y);
+   //     GameOverUI.SetActive(false);
+     //   music = FindAnyObjectByType<MusicRandomPlay>();
+     //  rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            P1 player = collision.GetComponent<P1>();
+        
+  //          P1 player = collision.GetComponent<P1>();
 
-            if (player != null)
-            {
-                player.Die(); 
-            }
 
-            StartCoroutine(HandleGameOver()); 
-        }
+    //    StartCoroutine(DamageCooldown());
+          }
+        
     }
 
-    IEnumerator HandleGameOver()
-    {
-        yield return new WaitForSeconds(2); 
-        Time.timeScale = 0f;  
-        GameOverUI.SetActive(true);  
-    }
-}
+ //   IEnumerator DamageCooldown()
+  //  {
+ //       canTakeDamage = false;
+ //       yield return new WaitForSeconds(0.1f); 
+//        canTakeDamage = true;
+ //   }
+
+
 
 

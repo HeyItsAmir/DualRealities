@@ -20,10 +20,13 @@ public class P1 : MonoBehaviour
     public BackgroundLooper repeat;
     public float scrollspeed =0f;
     private float lastXPosition;
+    public GameObject GameOverUI;
 
     public bool CloseAttack;
     public bool isDead;
     public bool IsJumping = false;
+        public GameObject Health1, Health2, Health3; 
+        private int currentHealth = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -132,21 +135,44 @@ public class P1 : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jump);
         }
     }
-    public void Die()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isDead)
+                if (collision.CompareTag("Enemy") )
+          {
+            
+             if (currentHealth <= 0) return; 
+
+        currentHealth--; 
+
+        
+        if (currentHealth == 2) Health1.SetActive(false);
+        else if (currentHealth == 1) Health2.SetActive(false);
+        else if (currentHealth == 0)
         {
-            isDead = true;
-            animator.SetBool("Dead", true);  
-            StartCoroutine(DestroyAfterDeath());
+            Health3.SetActive(false);
+            animator.SetBool("Dead", true); 
+            Invoke("Die", 2f);
         }
     }
-
-    IEnumerator DestroyAfterDeath()
-    {
-        FullHealth.SetActive(false);
-        yield return new WaitForSeconds(2);
-        Destroy(gameObject);  
     }
+    public void Die()
+    {
+        
+ //       FullHealth.SetActive(false);
+        
+        if (!isDead)
+        {
+        isDead = true;
+        GameOverUI.SetActive(true); 
+        Time.timeScale = 0f; 
+        Destroy(gameObject);
+        }
+            
+    }
+    
+    
+//IEnumerator
+
+
 
 }

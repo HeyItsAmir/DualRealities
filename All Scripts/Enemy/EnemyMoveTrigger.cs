@@ -13,10 +13,10 @@ void OnTriggerEnter2D(Collider2D collision)
 {
     if(collision.tag == "Player")
     {
-    rb.velocity = new Vector2(-speed, rb.velocity.y);
-    rb2.velocity = new Vector2(-speed, rb2.velocity.y);
-    rb3.velocity = new Vector2(-speed, rb3.velocity.y);
-}
+        rb.velocity = new Vector2(-speed, rb.velocity.y);
+        rb2.velocity = new Vector2(-speed, rb2.velocity.y);
+        rb3.velocity = new Vector2(-speed, rb3.velocity.y);
+    }
     }
     
 

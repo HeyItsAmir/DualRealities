@@ -15,9 +15,11 @@ public class P2 : MonoBehaviour
     [SerializeField] float jump;
     [SerializeField] Transform cameraTransform;
     [SerializeField] float rightLimitOfsset = 3;
-
+    public GameObject GameOverUI;
     public bool CloseAttack;
     public bool isDead;
+    public GameObject Health1, Health2, Health3; 
+    private int currentHealth = 3;
 
     public bool IsJumping = false;
     // Start is called before the first frame update
@@ -120,6 +122,24 @@ public class P2 : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jump);
         }
     }
+     void OnTriggerEnter2D(Collider2D collision)
+    {
+                if (collision.CompareTag("Enemy") )
+          {
+            
+             if (currentHealth <= 0) return; 
+
+        currentHealth--; 
+
+        
+        if (currentHealth == 2) Health1.SetActive(false);
+        else if (currentHealth == 1) Health2.SetActive(false);
+        else if (currentHealth == 0)
+        {
+            Health3.SetActive(false);
+            Die(); 
+        }
+    }}
     public void Die()
     {
         if (!isDead)
@@ -135,5 +155,7 @@ public class P2 : MonoBehaviour
         FullHealth.SetActive(false);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
+        Time.timeScale = 0f;  
+        GameOverUI.SetActive(true); 
     }
 }

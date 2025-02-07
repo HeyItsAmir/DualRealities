@@ -15,20 +15,24 @@ public class PlayerController2 : MonoBehaviour
     public float bulletSpeed = 10f;
     public float bulletLifetime = 2f;
     public float scrollspeed = 0f;
-
+    public GameObject GameOverUI;
+    public bool isDead;
 
     private Vector2 moveInput;
     private Vector2 lookInput;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private bool isGrounded = false;
     float direction;
     private float lastXPosition;
+    public Animator animator;
 
     public bool isShooting;
 
     public float shootCD = 0.3f;
 
     private float shootTime, shootTimeStamp;
+            public GameObject Health1, Health2, Health3; 
+        private int currentHealth = 3;
 void  Start()
 {
     lastXPosition = transform.position.x;
@@ -119,6 +123,7 @@ void  Start()
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        moveSpeed=0f;
         if (context.performed && isGrounded == true)
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -128,6 +133,7 @@ void  Start()
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        Shoot();
         if (context.performed)
         {
             isShooting = true;
@@ -158,12 +164,45 @@ void  Start()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-
-        rb.velocity = new Vector2(bulletSpeed * direction, rb.velocity.y);
+        rb.velocity = new Vector2(bulletSpeed * -direction, rb.velocity.y);
 
        // rb.velocity = Vector2.right * bulletSpeed;
 
         
         Destroy(bullet, bulletLifetime);
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+                if (collision.CompareTag("Enemy") )
+          {
+            
+             if (currentHealth <= 0) return; 
+
+        currentHealth--; 
+
+        
+        if (currentHealth == 2) Health1.SetActive(false);
+        else if (currentHealth == 1) Health2.SetActive(false);
+        else if (currentHealth == 0)
+        {
+            Health3.SetActive(false);
+            animator.SetBool("Dead", true); 
+            Invoke("Die", 2f);
+        }
+    }
+    }
+    public void Die()
+    {
+        
+ //       FullHealth.SetActive(false);
+        
+        if (!isDead)
+        {
+        isDead = true;
+        GameOverUI.SetActive(true); 
+        Time.timeScale = 0f; 
+        Destroy(gameObject);
+        }
+            
     }
     }
