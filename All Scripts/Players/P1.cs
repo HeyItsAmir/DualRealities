@@ -137,10 +137,10 @@ public class P1 : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-                if (collision.CompareTag("Enemy") )
-          {
+        if (collision.CompareTag("Enemy") )
+        {
             
-             if (currentHealth <= 0) return; 
+        if (currentHealth <= 0) return; 
 
         currentHealth--; 
 
@@ -148,12 +148,12 @@ public class P1 : MonoBehaviour
         if (currentHealth == 2) Health1.SetActive(false);
         else if (currentHealth == 1) Health2.SetActive(false);
         else if (currentHealth == 0)
-        {
-            Health3.SetActive(false);
-            animator.SetBool("Dead", true); 
-            Invoke("Die", 2f);
+         {
+                Health3.SetActive(false);
+                animator.SetBool("Dead", true); 
+                Invoke("Die", 2f);
+         }
         }
-    }
     }
     public void Die()
     {

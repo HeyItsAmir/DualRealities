@@ -27,8 +27,11 @@ public class PlayerController2 : MonoBehaviour
     public Animator animator;
 
     public bool isShooting;
+    public bool isshoot2;
+
 
     public float shootCD = 0.3f;
+    public bool ISs=false;
 
     private float shootTime, shootTimeStamp;
             public GameObject Health1, Health2, Health3; 
@@ -44,6 +47,7 @@ void  Start()
 
     private void Update()
     {
+        isshoot2 = false;
          if (transform.position.x > lastXPosition)
         {
             ScoreManager.instance.AddScore(1); 
@@ -70,9 +74,10 @@ void  Start()
 
         if (Input.GetKey(KeyCode.RightControl) && shootTimeStamp > shootTime)
         {
-            isShooting = true;
+            isshoot2 = true;
             Shoot();
             shootTime = shootTimeStamp + shootCD;
+            
         }
 
     }
@@ -84,19 +89,27 @@ void  Start()
         
          moveInput = context.ReadValue<Vector2>();
         if (moveInput.x < 0f)
-         scrollspeed = -5f;
+        {
+         scrollspeed = -3f;
+         ISs = true;
+        }
         else
          if(moveInput.x > 0f)
-            scrollspeed = 5f;
+            {
+            scrollspeed = 3f;
+            ISs = true;
+            }
         if (moveInput.magnitude < 0.1f) 
         {
           moveSpeed = 0f; 
+          ISs = true;
           scrollspeed = 0f;
+          
         }
         else
         {
          moveSpeed = 10f; 
-         
+         ISs = true;
         }
         
        
@@ -133,7 +146,6 @@ void  Start()
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        Shoot();
         if (context.performed)
         {
             isShooting = true;
@@ -160,7 +172,7 @@ void  Start()
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
@@ -168,7 +180,7 @@ void  Start()
 
        // rb.velocity = Vector2.right * bulletSpeed;
 
-        
+    
         Destroy(bullet, bulletLifetime);
     }
     void OnTriggerEnter2D(Collider2D collision)

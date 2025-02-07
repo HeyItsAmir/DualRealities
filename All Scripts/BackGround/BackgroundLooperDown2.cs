@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundLooperDown : MonoBehaviour
+public class BackgroundLooperDown2 : MonoBehaviour
 {
     public PlayerController2 p2;
     public P2 p2c;
@@ -20,10 +20,9 @@ public class BackgroundLooperDown : MonoBehaviour
     public void Update()
     {
         if (p2.ISs == false) 
-        scrollspeed = p2c.scrollspeed;
-        if (p2.ISs == true)
         scrollspeed = p2.scrollspeed;
         offset += (Time.deltaTime * scrollspeed) / 10f;
         mat.SetTextureOffset("_MainTex", new Vector2 (offset, 0));
     }
 }
+

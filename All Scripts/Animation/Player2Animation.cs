@@ -27,13 +27,19 @@ public class Player2Animation : MonoBehaviour
         PlayerSpeed2 = P2c.moveSpeed;
 
         animator.SetFloat("Speed", PlayerSpeed);
+        if (PlayerSpeed2 == 10f)
         animator.SetFloat("Speed", PlayerSpeed2);
 
-        if (controller2.isShooting)
+
+        if (controller2.isshoot2)
         {
             animator.SetBool("Attack", true);
         }
-        else
+        else if (controller2.isShooting )
+        {
+            animator.SetBool("Attack", true);
+        }
+        else 
         {
             animator.SetBool("Attack", false);
         }

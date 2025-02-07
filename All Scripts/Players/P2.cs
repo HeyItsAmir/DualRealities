@@ -20,6 +20,7 @@ public class P2 : MonoBehaviour
     public bool isDead;
     public GameObject Health1, Health2, Health3; 
     private int currentHealth = 3;
+    public float scrollspeed;
 
     public bool IsJumping = false;
     // Start is called before the first frame update
@@ -44,26 +45,31 @@ public class P2 : MonoBehaviour
 
             else
             {
+                scrollspeed = 0f;
                 speed = 0f;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
+                scrollspeed = -4f;
                 PlayerMove(-1);
             }
 
             if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < maxXposition)
             {
+                scrollspeed = 4f;
                 PlayerMove(1);
             }
 
             if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
             {
+                scrollspeed = 0f;
                 Jump();
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                scrollspeed = 0f;
                 CloseAttack = true;
             }
             else
@@ -76,7 +82,7 @@ public class P2 : MonoBehaviour
         {
             speed = 0;
             jump = 0;
-            //scrollspeed = 0; 
+            scrollspeed = 0f; 
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
