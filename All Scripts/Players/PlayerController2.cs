@@ -25,6 +25,10 @@ public class PlayerController2 : MonoBehaviour
     private float lastXPosition;
 
     public bool isShooting;
+
+    public float shootCD = 0.3f;
+
+    private float shootTime, shootTimeStamp;
 void  Start()
 {
     lastXPosition = transform.position.x;
@@ -58,6 +62,14 @@ void  Start()
         //    float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg;
         //    firePoint.rotation = Quaternion.Euler(0, 0, angle);
         //}
+        shootTimeStamp = Time.time;
+
+        if (Input.GetKey(KeyCode.RightControl) && shootTimeStamp > shootTime)
+        {
+            isShooting = true;
+            Shoot();
+            shootTime = shootTimeStamp + shootCD;
+        }
 
     }
 

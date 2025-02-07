@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
 
     public bool isShooting = false;
 
+    public float shootCD = 0.3f;
+
+    private float shootTime, shootTimeStamp;
+
     void Update()
     {
         isShooting = false;
@@ -30,11 +34,13 @@ public class PlayerController : MonoBehaviour
         // float moveX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         // float moveY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
         // transform.Translate(new Vector2(moveX, moveY));
+        shootTimeStamp = Time.time;
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) && shootTimeStamp > shootTime)
         {
             isShooting = true;
             Shoot();
+            shootTime = shootTimeStamp + shootCD;
         }
        
     }
@@ -43,6 +49,6 @@ public class PlayerController : MonoBehaviour
     public void Shoot()
     {
         // bullet 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 }

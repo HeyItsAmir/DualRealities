@@ -15,7 +15,7 @@ public class P1Bullet : MonoBehaviour
     float speed = 20f;
 
     [SerializeField]
-    float damage = 10f;
+    float damage = 20f;
 
     float direction;
 
@@ -39,9 +39,9 @@ public class P1Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            Enemy target = collision.gameObject.GetComponent<Enemy>();
+            Enemyy target = collision.gameObject.GetComponent<Enemyy>();
 
-          //  target.TakeDamage(damage);
+            target.TakeDamage(damage);
             Explode();
         }
         else if (collision.gameObject.tag == "Ground")

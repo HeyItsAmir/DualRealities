@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
-    float speed = 10f;
+    float speed = 1f;
     public bool PlayerIsDead;
     private MusicRandomPlay music;
     public GameObject GameOverUI;
@@ -18,6 +18,7 @@ public class EnemyMovement : MonoBehaviour
     {
         GameOverUI.SetActive(false);
         music = FindAnyObjectByType<MusicRandomPlay>();
+        rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
