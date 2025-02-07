@@ -4,7 +4,7 @@ using UnityEngine;
 public class ChaserMovement : MonoBehaviour
 {
     Rigidbody2D rb;
-    [SerializeField] float speed = 1.0f;
+    public float speed = 2.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
