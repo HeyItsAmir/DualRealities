@@ -6,6 +6,7 @@ public class Pause : MonoBehaviour
     private MusicRandomPlay musicRandomPlay;
     private bool IsPause = false;
     public GameObject GameOverUI;
+    public GameObject GameOverText;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,9 @@ public class Pause : MonoBehaviour
                 ResumeGame();
                 if (musicRandomPlay != null && !musicRandomPlay.audioSource.isPlaying)
                 {
-                musicRandomPlay.audioSource.UnPause();
+                    GameOverUI.SetActive(false);
+                    GameOverText.SetActive(true);
+                    musicRandomPlay.audioSource.UnPause();
                 }
             }
             else
@@ -34,6 +37,7 @@ public class Pause : MonoBehaviour
                 if (musicRandomPlay != null)
                 {
                     GameOverUI.SetActive(true);
+                    GameOverText.SetActive(false);
                     musicRandomPlay.audioSource.Pause();
                 }
             }

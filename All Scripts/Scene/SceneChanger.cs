@@ -23,12 +23,20 @@ public class SceneChanger : MonoBehaviour
     {
         
         Debug.Log("Changing");
-        SceneManager.LoadScene("Level-1");
+        SceneManager.LoadScene("LoadScene");
     }
     public void ChangeTheSceneToMainMenu()
     {
         
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Main_Menu");
+    }
+    public void ChangeTheSceneToCredit()
+    {
+        SceneManager.LoadScene("CreditScene");
+    }
+    public void ChangeToTutorial()
+    {
+        SceneManager.LoadScene("TutorialScene");
     }
 }
