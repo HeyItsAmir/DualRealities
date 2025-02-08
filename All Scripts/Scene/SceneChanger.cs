@@ -23,7 +23,7 @@ public class SceneChanger : MonoBehaviour
     {
         
         Debug.Log("Changing");
-        SceneManager.LoadScene("LoadScene");
+        SceneManager.LoadScene("Level-1");
     }
     public void ChangeTheSceneToMainMenu()
     {

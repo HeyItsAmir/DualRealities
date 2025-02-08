@@ -78,17 +78,6 @@
                 },
                 {
                     "name": "",
-                    "id": "edeaf6e8-0110-48d5-bdce-2a54bdad92f9",
-                    "path": "<Gamepad>/rightStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "aaa7fab0-a971-4b66-974e-2abeebd60906",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
