@@ -5,11 +5,11 @@ using UnityEngine;
 public class P2 : MonoBehaviour
 {
     public GameObject FullHealth;
-
+    private MusicRandomPlay musicRandomPlay;
     public Animator animator;
 
     private bool isGrounded;
-    bool isReverse;
+    public bool isReverse;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] public float speed = 1.0f;
     [SerializeField] float jump;
@@ -22,12 +22,15 @@ public class P2 : MonoBehaviour
     private int currentHealth = 3;
     public float scrollspeed;
 
+    public P1 p1;
+
     public bool IsJumping = false;
     // Start is called before the first frame update
     void Start()
     {
+        p1 = GetComponent<P1>();
         rb = GetComponent<Rigidbody2D>();
-
+        musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
         isReverse = GetComponent<ReverseGravity>().isReverse;
     }
 
@@ -109,11 +112,11 @@ public class P2 : MonoBehaviour
 
         if (direction > 0)
         {
-            transform.localScale = new Vector3(2, 2, 1);
+            transform.localScale = new Vector3(2, transform.localScale.y, 1);
         }
         else if (direction < 0)
         {
-            transform.localScale = new Vector3(-2, 2, 1);
+            transform.localScale = new Vector3(-2, transform.localScale.y, 1);
         }
     }
     void Jump()
@@ -122,6 +125,7 @@ public class P2 : MonoBehaviour
         if (isReverse)
         {
             rb.velocity = new Vector2(rb.velocity.x, jump * -1);
+            transform.localScale = new Vector3(transform.localScale.x, 2, transform.localScale.z);
         }
         else
         {
@@ -129,23 +133,24 @@ public class P2 : MonoBehaviour
         }
     }
      void OnTriggerEnter2D(Collider2D collision)
-    {
-                if (collision.CompareTag("Enemy") )
-          {
-            
-             if (currentHealth <= 0) return; 
-
-        currentHealth--; 
-
-        
-        if (currentHealth == 2) Health1.SetActive(false);
-        else if (currentHealth == 1) Health2.SetActive(false);
-        else if (currentHealth == 0)
+     {
+        if (collision.CompareTag("Enemy"))
         {
-            Health3.SetActive(false);
-            Die(); 
+
+            if (currentHealth <= 0) return;
+
+            currentHealth--;
+
+
+            if (currentHealth == 2) Health1.SetActive(false);
+            else if (currentHealth == 1) Health2.SetActive(false);
+            else if (currentHealth == 0)
+            {
+                Health3.SetActive(false);
+                Die();
+            }
         }
-    }}
+     }
     public void Die()
     {
         if (!isDead)
@@ -159,6 +164,7 @@ public class P2 : MonoBehaviour
     IEnumerator DestroyAfterDeath()
     {
         FullHealth.SetActive(false);
+        musicRandomPlay.audioSource.Pause();
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
         Time.timeScale = 0f;  

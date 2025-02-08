@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class P1 : MonoBehaviour
 {
     public GameObject FullHealth;
-
+    private MusicRandomPlay musicRandomPlay;
     public Animator animator;
 
     private bool isGrounded;
-    bool isReverse;
+    public bool isReverse;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] public float speed = 1.0f;
     [SerializeField] float jump = 10f;
@@ -22,6 +23,8 @@ public class P1 : MonoBehaviour
     private float lastXPosition;
     public GameObject GameOverUI;
 
+    public P2 p2;
+
     public bool CloseAttack;
     public bool isDead;
     public bool IsJumping = false;
@@ -30,6 +33,8 @@ public class P1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        p2 = GetComponent<P2>();
+        musicRandomPlay = FindObjectOfType<MusicRandomPlay>();
         rb = GetComponent<Rigidbody2D>();
         lastXPosition = transform.position.x;
         isReverse = GetComponent<ReverseGravity>().isReverse;
@@ -124,7 +129,7 @@ public class P1 : MonoBehaviour
         }
     }
     void Jump()
-    {      
+    {
         IsJumping = true;
         if(isReverse)
         {
@@ -156,23 +161,15 @@ public class P1 : MonoBehaviour
         }
     }
     public void Die()
-    {
-        
- //       FullHealth.SetActive(false);
-        
+    {   
         if (!isDead)
         {
-        isDead = true;
-        GameOverUI.SetActive(true); 
-        Time.timeScale = 0f; 
-        Destroy(gameObject);
+            isDead = true;
+            musicRandomPlay.audioSource.Pause();
+            GameOverUI.SetActive(true);
+            Time.timeScale = 0f;
+            Destroy(gameObject);
         }
             
     }
-    
-    
-//IEnumerator
-
-
-
 }

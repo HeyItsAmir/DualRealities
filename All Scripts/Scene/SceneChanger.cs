@@ -21,7 +21,6 @@ public class SceneChanger : MonoBehaviour
 
     public void ChangeTheSceneToLevel1()
     {
-        
         Debug.Log("Changing");
         SceneManager.LoadScene("Level-1");
     }
@@ -38,5 +37,9 @@ public class SceneChanger : MonoBehaviour
     public void ChangeToTutorial()
     {
         SceneManager.LoadScene("TutorialScene");
+    }
+    public void ChangeToLoadingScene()
+    {
+        SceneManager.LoadScene("LoadingScene");
     }
 }
